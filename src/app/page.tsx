@@ -1,8 +1,11 @@
-import Card from "./components/Card";
+import React from 'react'
 
-export default function Home() {
+const page = () => {
   return (
-    <>
-    <Card _id="1" ingredients={['ghjkl']} name={'recipe'} category={'category'} imageUrl={'https://tinyurl.com/bddvtauz'} instructions={'instructions sdfghjkl;;jklkjhgbn'} isFavorite={false}></Card></>
-  );
+    <div className='bg-yellow-400 text-red-500'>
+     fngd 
+    </div>
+  )
 }
+
+export default page
