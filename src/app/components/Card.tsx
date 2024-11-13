@@ -2,32 +2,44 @@
 import React, { useState } from "react";
 import { Recipe } from "../types/recipe";
 import Image from "next/image";
+import { useRecipeStore } from "../store/use-store/useRecipeStore";
 
-const Card: React.FC<Recipe> = ({
-  name,
-  category,
-  imageUrl,
-  instructions,
-  isFavorite,
-}) => {
-  const [favorite, setFavorite] = useState(isFavorite);
+interface cardProps {
+  recipe: Recipe;
+  openCard: () => void;
+}
 
-  const toggleFavorite = () => setFavorite((prev) => !prev);
+const Card: React.FC<cardProps> = ({ recipe }) => {
+  const [favorite, setFavorite] = useState(recipe.isFavorite);
+  const updateRecipe = useRecipeStore((state) => state.updateRecipe);
 
+  const toggleFavorite = () => {
+    setFavorite((prev) => !prev);
+    const newRecipe = {
+      _id: recipe._id,
+      name: recipe.name,
+      category: recipe.category,
+      imageUrl: recipe.imageUrl,
+      ingredients: recipe.ingredients,
+      instructions: recipe.instructions,
+      isFavorite: !recipe.isFavorite,
+    };
+    updateRecipe(recipe._id, newRecipe);
+  };
 
   return (
     <>
-      <div className="min-w-56 p-2 min-h-72 bg-white border border-black rounded-lg shadow dark:bg-gray-200 ">
+      <div className="min-w-64 min-h-72 bg-white border border-black rounded-lg shadow dark:bg-gray-200 ">
         <Image
           className="rounded-t-xl"
-          src={imageUrl}
-          width={250}
-          height={250}
-          alt={`${name} picture`}
+          src={recipe.imageUrl}
+          width={270}
+          height={270}
+          alt={`${recipe.name} picture`}
         />
-        <div className="p-5 flex flex-col justify-evenly">
+        <div className="p-5 flex flex-col justify-around ">
           <div className="flex justify-between">
-            <p className="font-bold text-xl">{name}</p>
+            <p className="font-bold text-lg">{recipe.name}</p>
 
             {!favorite ? (
               <svg
@@ -63,9 +75,9 @@ const Card: React.FC<Recipe> = ({
               </svg>
             )}
           </div>
-          <p className="font-semibold text-lg">{category}</p>
-          <p className="">{instructions.slice(0, 20)}...</p>
-          <button className="p-1 bg-[#7864EA] rounded-lg text-white my-1">
+          <p className="font-semibold text-md">{recipe.category}</p>
+          <p className="">{recipe.instructions.slice(0, 20)}...</p>
+          <button className="p-1 bg-[#7864EA] rounded-lg text-white my-1 mt-auto">
             Read more
           </button>
         </div>
@@ -75,4 +87,3 @@ const Card: React.FC<Recipe> = ({
 };
 
 export default Card;
-
