@@ -17,15 +17,15 @@ const Card: React.FC<Recipe> = ({
 
   return (
     <>
-      <div className="max-w-fit p-2 max-h-fit bg-white border border-black rounded-lg shadow dark:bg-gray-200 ">
+      <div className="min-w-56 p-2 min-h-72 bg-white border border-black rounded-lg shadow dark:bg-gray-200 ">
         <Image
           className="rounded-t-xl"
           src={imageUrl}
-          width={200}
-          height={200}
+          width={250}
+          height={250}
           alt={`${name} picture`}
         />
-        <div className="p-5">
+        <div className="p-5 flex flex-col justify-evenly">
           <div className="flex justify-between">
             <p className="font-bold text-xl">{name}</p>
 

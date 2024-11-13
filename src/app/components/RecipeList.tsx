@@ -14,20 +14,22 @@ const RecipeList = () => {
 
   return (
     <div className="mt-5 ml-5">
-  
       {recipeList && (
-        <div className=" grid grid-cols-6 gap 2">
+        <div className="grid grid-cols-6 gap-4">
           {recipeList.map((r) => (
+            <>
+          
             <Card
               key={r._id}
-              _id="1"
-              ingredients={["ghjkl"]}
-              name={"recipe"}
-              category={"category"}
-              imageUrl={"https://tinyurl.com/bddvtauz"}
-              instructions={"instructions sdfghjkl;;jklkjhgbn"}
-              isFavorite={false}
+              _id={r._id}
+              ingredients={r.ingredients}
+              name={r.name}
+              category={r.category}
+              imageUrl={r.imageUrl}
+              instructions={r.instructions}
+              isFavorite={r.isFavorite}
             ></Card>
+            </>
           ))}
         </div>
       )}
