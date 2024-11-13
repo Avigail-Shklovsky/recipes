@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Recipe } from "../types/recipe";
 import Image from "next/image";
+import { useRecipeStore } from "../store/use-store/useRecipeStore";
 
 interface cardProps{
   recipe: Recipe;
@@ -11,23 +12,35 @@ interface cardProps{
 const Card: React.FC<cardProps> = ({recipe,openCard}) => {
   const [favorite, setFavorite] = useState(recipe.isFavorite);
 
-  const toggleFavorite = () => setFavorite((prev) => !prev);
+  const updateRecipe = useRecipeStore((state) => state.updateRecipe);
 
+  const toggleFavorite = () => {
+    setFavorite((prev) => !prev);
+    const newRecipe = {
+      _id: recipe._id,
+      name: recipe.name,
+      category: recipe.category,
+      imageUrl: recipe.imageUrl,
+      ingredients: recipe.ingredients,
+      instructions: recipe.instructions,
+      isFavorite: !recipe.isFavorite,
+    };
+    updateRecipe(recipe._id, newRecipe);
+  };
 
   return (
     <>
-      <div className="max-w-fit p-2 max-h-fit bg-white border border-black rounded-lg shadow dark:bg-gray-200 ">
+      <div className="min-w-64 min-h-72 bg-white border border-black rounded-lg shadow dark:bg-gray-200 ">
         <Image
           className="rounded-t-xl"
           src={recipe.imageUrl}
-          width={200}
-          height={200}
+          width={270}
+          height={270}
           alt={`${recipe.name} picture`}
         />
-        <div className="p-5">
+        <div className="p-5 flex flex-col justify-around ">
           <div className="flex justify-between">
-            <p className="font-bold text-xl">{recipe.name}</p>
-
+            <p className="font-bold text-lg">{recipe.name}</p>
             {!favorite ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -62,9 +75,11 @@ const Card: React.FC<cardProps> = ({recipe,openCard}) => {
               </svg>
             )}
           </div>
-          <p className="font-semibold text-lg">{recipe.category}</p>
+
+          <p className="font-semibold text-md">{recipe.category}</p>
           <p className="">{recipe.instructions.slice(0, 20)}...</p>
           <button className="p-1 bg-[#7864EA] rounded-lg text-white my-1" onClick={()=>openCard(recipe)}>
+
             Read more
           </button>
         </div>
@@ -74,4 +89,3 @@ const Card: React.FC<cardProps> = ({recipe,openCard}) => {
 };
 
 export default Card;
-

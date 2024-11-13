@@ -7,7 +7,7 @@ import RecipeModel from "./RecipeModel";
 import { Recipe } from "../types/recipe";
 
 const RecipeList = () => {
-  const [isOpen,setIsOpen]=useState(false)
+  const [isOpen, setIsOpen] = useState(false);
   const fetchRecipes = useRecipeStore((state) => state.fetchRecipes);
   const recipeList = useRecipeStore((state) => state.recipeList);
   const setCurrentRecipe=useRecipeStore((state)=>state.setCurrentRecipe);
