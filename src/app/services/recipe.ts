@@ -1,10 +1,10 @@
 import axios from "axios";
 import { Recipe } from "../types/recipe";
 
-export const getRecipe = async () => {
+export const getRecipes = async () => {
   try {
-    const response = await axios.get("http://localhost:3000/api/recipe/get");
-    return response.data;
+    const response = await axios.get("http://localhost:3000/api/get");
+    return response.data.data;
   } catch (error) {
     console.error("Error getting recipe:", error);
     throw error;
@@ -19,30 +19,31 @@ export const createRecipe = async (recipe: Recipe) => {
     );
     return response.data;
   } catch (error) {
-    console.log("Error creating recipe:" ,error);
+    console.log("Error creating recipe:", error);
     throw error;
   }
 };
 
-export const updateRecipe = async (id:number)=>{
-    try{
-        const response =await axios.put(`http://localhost:3000/api/recipe/put/${id}`);
-        return response.data;
-    }
-    catch(error){
-        console.log("Error updating recipe:", error);
-        throw error;
-    }
-}
+export const updateRecipe = async (id: number) => {
+  try {
+    const response = await axios.put(
+      `http://localhost:3000/api/recipe/put/${id}`
+    );
+    return response.data;
+  } catch (error) {
+    console.log("Error updating recipe:", error);
+    throw error;
+  }
+};
 
-export const deleteRecipe = async (id:number)=>{
-    try{
-        const response = await axios.delete(`https://localhost:3000/api/recipe/delete/${id}`);
-        return response.data;
-    }
-    catch(error){
-        console.log("Error deleting recipe",error);
-        throw error;
-        
-    }
-}
+export const deleteRecipe = async (id: number) => {
+  try {
+    const response = await axios.delete(
+      `https://localhost:3000/api/recipe/delete/${id}`
+    );
+    return response.data;
+  } catch (error) {
+    console.log("Error deleting recipe", error);
+    throw error;
+  }
+};
