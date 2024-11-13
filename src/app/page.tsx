@@ -1,11 +1,11 @@
-import React from 'react'
+import React from "react";
 
 const page = () => {
   return (
-    <div className='bg-yellow-400 text-red-500'>
-     fngd 
-    </div>
-  )
-}
+    <div>
 
-export default page
+    </div>
+  );
+};
+
+export default page;
