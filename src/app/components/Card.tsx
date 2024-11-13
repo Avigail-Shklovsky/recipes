@@ -3,14 +3,13 @@ import React, { useState } from "react";
 import { Recipe } from "../types/recipe";
 import Image from "next/image";
 
-const Card: React.FC<Recipe> = ({
-  name,
-  category,
-  imageUrl,
-  instructions,
-  isFavorite,
-}) => {
-  const [favorite, setFavorite] = useState(isFavorite);
+interface cardProps{
+  recipe: Recipe;
+  openCard:(recipe:Recipe)=>void;
+}
+
+const Card: React.FC<cardProps> = ({recipe,openCard}) => {
+  const [favorite, setFavorite] = useState(recipe.isFavorite);
 
   const toggleFavorite = () => setFavorite((prev) => !prev);
 
@@ -20,14 +19,14 @@ const Card: React.FC<Recipe> = ({
       <div className="max-w-fit p-2 max-h-fit bg-white border border-black rounded-lg shadow dark:bg-gray-200 ">
         <Image
           className="rounded-t-xl"
-          src={imageUrl}
+          src={recipe.imageUrl}
           width={200}
           height={200}
-          alt={`${name} picture`}
+          alt={`${recipe.name} picture`}
         />
         <div className="p-5">
           <div className="flex justify-between">
-            <p className="font-bold text-xl">{name}</p>
+            <p className="font-bold text-xl">{recipe.name}</p>
 
             {!favorite ? (
               <svg
@@ -63,9 +62,9 @@ const Card: React.FC<Recipe> = ({
               </svg>
             )}
           </div>
-          <p className="font-semibold text-lg">{category}</p>
-          <p className="">{instructions.slice(0, 20)}...</p>
-          <button className="p-1 bg-[#7864EA] rounded-lg text-white my-1">
+          <p className="font-semibold text-lg">{recipe.category}</p>
+          <p className="">{recipe.instructions.slice(0, 20)}...</p>
+          <button className="p-1 bg-[#7864EA] rounded-lg text-white my-1" onClick={()=>openCard(recipe)}>
             Read more
           </button>
         </div>
