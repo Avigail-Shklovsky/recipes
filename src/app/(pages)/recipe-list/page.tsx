@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect } from "react";
 import { useRecipeStore } from "@/app/store/use-store/useRecipeStore";
+
 import Card from "@/app/components/Card";
 
 const Page = () => {
@@ -89,5 +90,7 @@ const Page = () => {
     </div>
   );
 };
+
+
 
 export default Page;

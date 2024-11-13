@@ -14,6 +14,7 @@ const Card: React.FC<Recipe> = ({
 
   const toggleFavorite = () => setFavorite((prev) => !prev);
 
+
   return (
     <>
       <div className="max-w-fit p-2 max-h-fit bg-white border border-black rounded-lg shadow dark:bg-gray-200 ">
