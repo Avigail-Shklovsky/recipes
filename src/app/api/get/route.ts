@@ -4,6 +4,9 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
+    await connect();
+    console.log("check");
+    // return NextResponse.json({ message: "success" });
     const data = await Recipe.find() || [];
     return NextResponse.json({ massage: "seccessfull", data: data });
   } catch (error) {
@@ -12,7 +15,4 @@ export async function GET() {
       { status: 500 }
     );
   }
-  await connect();
-  console.log("check");
-  return NextResponse.json({ message: "success" });
 }
