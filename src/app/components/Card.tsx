@@ -4,13 +4,14 @@ import { Recipe } from "../types/recipe";
 import Image from "next/image";
 import { useRecipeStore } from "../store/use-store/useRecipeStore";
 
-interface cardProps {
+interface cardProps{
   recipe: Recipe;
-  openCard: () => void;
+  openCard:(recipe:Recipe)=>void;
 }
 
-const Card: React.FC<cardProps> = ({ recipe }) => {
+const Card: React.FC<cardProps> = ({recipe,openCard}) => {
   const [favorite, setFavorite] = useState(recipe.isFavorite);
+
   const updateRecipe = useRecipeStore((state) => state.updateRecipe);
 
   const toggleFavorite = () => {
@@ -40,7 +41,6 @@ const Card: React.FC<cardProps> = ({ recipe }) => {
         <div className="p-5 flex flex-col justify-around ">
           <div className="flex justify-between">
             <p className="font-bold text-lg">{recipe.name}</p>
-
             {!favorite ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -75,9 +75,11 @@ const Card: React.FC<cardProps> = ({ recipe }) => {
               </svg>
             )}
           </div>
+
           <p className="font-semibold text-md">{recipe.category}</p>
           <p className="">{recipe.instructions.slice(0, 20)}...</p>
-          <button className="p-1 bg-[#7864EA] rounded-lg text-white my-1 mt-auto">
+          <button className="p-1 bg-[#7864EA] rounded-lg text-white my-1" onClick={()=>openCard(recipe)}>
+
             Read more
           </button>
         </div>
