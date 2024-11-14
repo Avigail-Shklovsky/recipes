@@ -1,0 +1,15 @@
+.input-box {
+  @apply min-w-[10vw] rounded-md px-[10px] py-[3px] border-[0.5px] border-gray-300 border-solid;
+}
+
+.error-message {
+  @apply text-red-500 text-sm max-w-[13vw] break-words mt-1 ml-1;
+}
+
+.select-box {
+  @apply min-w-[13.1vw] rounded-md px-[10px] py-[3px] border-[0.5px] border-gray-300 border-solid text-[#A2A4B5];
+}
+
+.select-box:focus {
+  @apply text-black;
+}

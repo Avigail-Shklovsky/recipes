@@ -24,8 +24,7 @@ export const createRecipe = async (recipe: Recipe) => {
 export const updateRecipe = async (id: string, recipe: Recipe) => {
   try {
     const response = await axios.put(
-      `http://localhost:3000/api/put/${id}`,
-      recipe
+      `http://localhost:3000/api/put/${id}`, recipe
     );
     return response.data;
   } catch (error) {

@@ -6,6 +6,7 @@ import { updateRecipe } from "@/app/services/recipe";
 export const useRecipeStore = create<Store>((set) => ({
   currentRecipe: null,
   recipeList: [],
+  categoryList: ["Main Dishes", "Pastries and Breads", "Cakes", "Desserts", "Drinks"],
   setCurrentRecipe: (currentRecipe) => set({ currentRecipe }),
   addRecipe: (recipe) =>
     set((state) => ({ recipeList: [...state.recipeList, recipe] })),
@@ -13,12 +14,10 @@ export const useRecipeStore = create<Store>((set) => ({
   updateRecipe: async(id, recipe) =>{
     const data= await updateRecipe(id,recipe)
     console.log(data.updateRecipe);
-    
     set((state) => ({
       recipeList: state.recipeList.map((r) => (r._id === id ? recipe : r)),
     }))
 },
-
   deleteRecipe: (id) =>
     set((state) => ({
       recipeList: state.recipeList.filter((r) => r._id !== id),
