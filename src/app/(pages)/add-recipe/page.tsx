@@ -3,7 +3,7 @@ import React from 'react'
 import { useRouter } from 'next/navigation';
 import AddRecipe from '@/app/components/AddRecipe';
 
-const Page = () => {
+const page = () => {
     const router = useRouter();
 
     return (
@@ -14,4 +14,4 @@ const Page = () => {
     )
 }
 
-export default Page;
+export default page;
