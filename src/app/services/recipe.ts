@@ -21,7 +21,7 @@ export const createRecipe = async (recipe: Recipe) => {
   }
 };
 
-export const updateRecipe = async (id: string, recipe: Recipe) => {
+export const updateRecipeById = async (id: string, recipe: Recipe) => {
   try {
     const response = await axios.put(
       `http://localhost:3000/api/put/${id}`, recipe
@@ -33,10 +33,10 @@ export const updateRecipe = async (id: string, recipe: Recipe) => {
   }
 };
 
-export const deleteRecipe = async (id: number) => {
+export const deleteRecipeById = async (id: string) => {
   try {
     const response = await axios.delete(
-      `https://localhost:3000/api/delete/${id}`
+      `http://localhost:3000/api/delete/${id}`
     );
     return response.data;
   } catch (error) {
