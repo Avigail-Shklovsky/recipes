@@ -24,12 +24,12 @@ const Card: React.FC<cardProps> = ({ recipe, openCard }) => {
     updateRecipe(recipe._id ? recipe._id : "", newRecipe);
     await updateRecipeById(recipe._id ? recipe._id : "", newRecipe)
   };
- 
-  
+
+
 
   return (
     <>
-      <div className="min-w-64 min-h-72 bg-white border border-black rounded-lg shadow dark:bg-gray-200 ">
+      <div className="min-w-64 min-h-72 bg-white border border-black rounded-lg shadow">
         <Image
           className="rounded-t-xl object-cover w-[260px] h-[200px]"
           src={recipe.imageUrl}

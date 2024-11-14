@@ -17,22 +17,20 @@ const RecipeList: React.FC<RecipeListProps> = ({ recipeList }) => {
   const fetchRecipes = useRecipeStore((state) => state.fetchRecipes);
   const setCurrentRecipe = useRecipeStore((state) => state.setCurrentRecipe);
 
-
   // pagination variables
   const [currentPage, setCurrentPage] = useState(0);
   const perPage = 5;
   const start = perPage * currentPage;
   const end = start + perPage;
-  const totalpages = Math.ceil(recipeList.length / perPage);
-  const pageNumbers = Array.from({ length: totalpages }, (_, i) => i + 1);
+  const totalPages = Math.ceil(recipeList.length / perPage);
+  const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
   const pagedRecipes = recipeList.slice(start, end);
 
   const handlePageChange = (page: number) => {
-    if (page >= 0 && page < totalpages) {
+    if (page >= 0 && page < totalPages) {
       setCurrentPage(page);
     }
   };
-
 
   useEffect(() => {
     fetchRecipes();
@@ -51,7 +49,7 @@ const RecipeList: React.FC<RecipeListProps> = ({ recipeList }) => {
   return (
     <>
       <div>
-        <div className="flex  ml-6">
+        <div className="flex ml-6 py-8">
           <button
             onClick={() => setIsShowFavorite((prev) => !prev)}
             className={`px-6 py-2 text-xl font-semibold ${!isShowFavorite
