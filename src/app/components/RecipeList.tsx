@@ -11,6 +11,7 @@ const RecipeList = () => {
   const fetchRecipes = useRecipeStore((state) => state.fetchRecipes);
   const recipeList = useRecipeStore((state) => state.recipeList);
   const setCurrentRecipe = useRecipeStore((state) => state.setCurrentRecipe);
+  const [isShowFavorite, setIsShowFavorite] = useState(false);
 
   useEffect(() => {
     fetchRecipes();
@@ -27,16 +28,43 @@ const RecipeList = () => {
   };
   return (
     <div>
+      <div className="flex  mb-6">
+        <button
+          onClick={() => setIsShowFavorite((prev) => !prev)}
+          className={`px-6 py-2 text-xl font-semibold ${
+            !isShowFavorite
+              ? "bg-transparent text-[#7864EA] border-b-2 border-[#7864EA] font-bold"
+              : "bg-transparent text-gray-400 border-b-2 border-gray-400"
+          }`}
+        >
+          All recipes
+        </button>
+        <button
+          onClick={() => setIsShowFavorite((prev) => !prev)}
+          className={`px-6 py-2 text-xl font-semibold ${
+            isShowFavorite
+              ? "bg-transparent text-[#7864EA] border-b-2 border-[#7864EA] font-bold"
+              : "bg-transparent text-gray-400 border-b-2 border-gray-400"
+          }`}
+        >
+          Favorites
+        </button>
+      </div>
+
       <div className="mt-5 ml-5">
         {recipeList && (
-          <div className=" grid grid-cols-6 gap-20">
-            {recipeList.map((r) => (
-              <Card
-                key={r._id}
-                recipe={r}
-                openCard={() => openOrCloseModel(r)}
-              ></Card>
-            ))}
+          <div className="grid grid-cols-6 gap-20">
+            {recipeList
+              //If isShowFavorite is true, it includes only recipes where r.isFavorite is true.
+              //If isShowFavorite is false, it includes all recipes without filtering based on isFavorite.
+              .filter((r) => !isShowFavorite || r.isFavorite)
+              .map((r) => (
+                <Card
+                  key={r._id}
+                  recipe={r}
+                  openCard={() => openOrCloseModel(r)}
+                />
+              ))}
           </div>
         )}
       </div>
