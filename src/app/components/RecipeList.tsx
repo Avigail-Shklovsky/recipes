@@ -5,16 +5,22 @@ import { useRecipeStore } from "@/app/store/use-store/useRecipeStore";
 import Card from "@/app/components/Card";
 import RecipeModel from "./RecipeModel";
 import { Recipe } from "../types/recipe";
+
+
+ 
+
 interface RecipeListProps {
   recipeList: Recipe[];
 }
 
 const RecipeList: React.FC<RecipeListProps> = ({ recipeList }) => {
   const [isOpen, setIsOpen] = useState(false);
+    const [isShowFavorite, setIsShowFavorite] = useState(false);
+
   const fetchRecipes = useRecipeStore((state) => state.fetchRecipes);
   const recipeListFromStore = useRecipeStore((state) => state.recipeList);
   const setCurrentRecipe = useRecipeStore((state) => state.setCurrentRecipe);
-  const [isShowFavorite, setIsShowFavorite] = useState(false);
+
 
   // pagination variables
   const [currentPage, setCurrentPage] = useState(0);
@@ -31,6 +37,7 @@ const RecipeList: React.FC<RecipeListProps> = ({ recipeList }) => {
     }
   };
 
+
   useEffect(() => {
     fetchRecipes();
   }, []);
@@ -44,6 +51,7 @@ const RecipeList: React.FC<RecipeListProps> = ({ recipeList }) => {
     setIsOpen(false);
     setCurrentRecipe(null);
   };
+
   return (
     <div>
       <div className="flex  ml-6">
@@ -70,18 +78,21 @@ const RecipeList: React.FC<RecipeListProps> = ({ recipeList }) => {
       </div>
 
       <div className="mt-5 ml-3 mr-3">
+
         {pagedRecipes && (
-          <div className="grid grid-cols-5 gap-10">
+    <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {pagedRecipes
               //If isShowFavorite is true, it includes only recipes where r.isFavorite is true.
               //If isShowFavorite is false, it includes all recipes without filtering based on isFavorite.
               .filter((r) => !isShowFavorite || r.isFavorite)
               .map((r) => (
+                <div className="w-[250px] h-[350px]"  >
                 <Card
                   key={r._id}
                   recipe={r}
                   openCard={() => openOrCloseModel(r)}
                 />
+                      </div>
               ))}
           </div>
         )}
@@ -134,6 +145,7 @@ const RecipeList: React.FC<RecipeListProps> = ({ recipeList }) => {
       {/* end of pagination numbers */}
 
       {/* recipe modal */}
+
       {isOpen && (
         <div
           className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center"
@@ -151,7 +163,9 @@ const RecipeList: React.FC<RecipeListProps> = ({ recipeList }) => {
         >
           ✖
         </button>
-        <RecipeModel />
+
+        <RecipeModel close={closeModal}/>
+
       </div>
     </div>
   );
