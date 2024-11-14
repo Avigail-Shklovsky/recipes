@@ -3,7 +3,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { Filtering } from "./components/Filtering";
 
-const Page = () => {
+const page = () => {
   const router = useRouter();
 
   return (
@@ -25,4 +25,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default page;
