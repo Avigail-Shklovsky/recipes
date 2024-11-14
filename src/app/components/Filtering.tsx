@@ -22,7 +22,7 @@ export const Filtering = () => {
 
   return (
     <>
-      <div className="mt-3 ml-6">
+      <div className="mt-3 ml-3">
         <div className="flex flex-col py-6">
           <select
             className="bg-transparent text-gray-700 border-2 border-gray-400 py-2 w-32  focus:outline-none  "
