@@ -5,14 +5,10 @@ import { NextResponse } from "next/server";
 export async function GET() {
   try {
     await connect();
-    console.log("check");
-    // return NextResponse.json({ message: "success" });
     const data = await Recipe.find() || [];
     return NextResponse.json({ massage: "seccessfull", data: data });
   } catch (error) {
     return NextResponse.json(
-      { message: "error to get", error },
-      { status: 500 }
-    );
+      { message: "error to get", error,status: 500 });
   }
 }

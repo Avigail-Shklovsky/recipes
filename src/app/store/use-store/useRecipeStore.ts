@@ -1,28 +1,30 @@
-import { create } from 'zustand';
-import { Store } from '@/app/types/store';
-import axios from 'axios';
+import { create } from "zustand";
+import { Store } from "@/app/types/store";
+import { getRecipes } from "@/app/services/recipe";
+import { updateRecipe } from "@/app/services/recipe";
 
 export const useRecipeStore = create<Store>((set) => ({
-    currentRecipe: null,
-    recipeList: [],
-    categoryList: ["Main Dishes", "Pastries and Breads", "Cakes", "Desserts", "Drinks"],
-    setCurrentRecipe: (currentRecipe) => set({ currentRecipe }),
-    addRecipe: (recipe) => set((state) => ({ recipeList: [...state.recipeList, recipe], })),
-    updateRecipe: (id, recipe) => set((state) => ({
-        recipeList: state.recipeList.map((r) =>
-            r._id === id ? recipe : r
-        )
-    })),
-    deleteRecipe: (id) => set((state) => ({ recipeList: state.recipeList.filter((r) => r._id !== id) })),
-    setRecipeList: (recipeList) => set({ recipeList }),
-    fetchRecipes: async () => {
-        try {
-            console.log("here");
+  currentRecipe: null,
+  recipeList: [],
+  categoryList: ["Main Dishes", "Pastries and Breads", "Cakes", "Desserts", "Drinks"],
+  setCurrentRecipe: (currentRecipe) => set({ currentRecipe }),
+  addRecipe: (recipe) =>
+    set((state) => ({ recipeList: [...state.recipeList, recipe] })),
 
-            const response = await axios.get('http://localhost:3000/api/recipe/get');
-            set({ recipeList: response.data });
-        } catch (error) {
-            console.error('Failed to fetch recipes:', error);
-        }
-    },
-}))
+  updateRecipe: async(id, recipe) =>{
+    const data= await updateRecipe(id,recipe)
+    console.log(data.updateRecipe);
+    set((state) => ({
+      recipeList: state.recipeList.map((r) => (r._id === id ? recipe : r)),
+    }))
+},
+  deleteRecipe: (id) =>
+    set((state) => ({
+      recipeList: state.recipeList.filter((r) => r._id !== id),
+    })),
+  setRecipeList: (recipeList) => set({ recipeList }),
+  fetchRecipes: async () => {
+    const data = await getRecipes();
+    set({ recipeList: data });
+  },
+}));
