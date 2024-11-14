@@ -69,15 +69,19 @@ const RecipeList = () => {
         )}
       </div>
       {isOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40"
+
+        <div 
+          className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center"
+
           onClick={closeModal}
         />
       )}
 
-      <div
-        className={`fixed top-0 right-0 h-full w-80 bg-white shadow-lg z-50 p-4 transition-transform duration-300 ${
-          isOpen ? "translate-x-0" : "translate-x-full"
+
+      <div 
+        className={`fixed top-0 right-0 h-full w-70 bg-white shadow-lg z-50 p-4 transition-transform duration-40 ${
+          isOpen ? 'translate-x-0' : 'translate-x-full'
+
         }`}
       >
         <button
