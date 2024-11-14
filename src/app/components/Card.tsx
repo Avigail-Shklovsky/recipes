@@ -32,7 +32,7 @@ const Card: React.FC<cardProps> = ({recipe,openCard}) => {
     <>
       <div className="min-w-64 min-h-72 bg-white border border-black rounded-lg shadow dark:bg-gray-200 ">
         <Image
-          className="rounded-t-xl"
+          className="rounded-t-xl object-cover w-[260px] h-[200px]"
           src={recipe.imageUrl}
           width={270}
           height={270}

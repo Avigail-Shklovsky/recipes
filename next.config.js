@@ -1,6 +1,6 @@
 const nextConfig = {
   images: {
-    domains: ["tinyurl.com"],
+    domains: ["tinyurl.com","www.google.com"],
   },
 };
 

@@ -6,6 +6,7 @@ import { z } from 'zod';
 import { createRecipe } from '../services/recipe';
 
 const formSchema = z.object({
+    _id: z.string(),
     name: z.string().trim().min(3, "Recipe name must contain at least 3 characters").max(60, "Recipe name must contain at most 60 characters").min(1, "Recipe name is required"),
     category: z.string().trim().min(1, "Category is required"),
     imageUrl: z.string().url("Invalid URL").trim().min(1, "Image URL is required"),
@@ -16,7 +17,7 @@ const formSchema = z.object({
 
 const AddRecipe = () => {
 
-    const [formData, setFormData] = useState<z.infer<typeof formSchema>>({ name: "", category: "", imageUrl: "", ingredients: [], instructions: "", isFavorite: false });
+    const [formData, setFormData] = useState<z.infer<typeof formSchema>>({ _id: "", name: "", category: "", imageUrl: "", ingredients: [], instructions: "", isFavorite: false });
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
     const categoryList = useRecipeStore((state) => state.categoryList);
