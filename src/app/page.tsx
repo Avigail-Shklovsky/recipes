@@ -1,10 +1,9 @@
 import React from 'react'
+import AddRecipe from './components/AddRecipe'
 
 const page = () => {
   return (
-    <div className='bg-yellow-400 text-red-500'>
-     fngd 
-    </div>
+    <AddRecipe />
   )
 }
 

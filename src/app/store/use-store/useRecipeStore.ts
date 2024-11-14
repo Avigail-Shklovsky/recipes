@@ -5,6 +5,7 @@ import axios from 'axios';
 export const useRecipeStore = create<Store>((set) => ({
     currentRecipe: null,
     recipeList: [],
+    categoryList: ["Main Dishes", "Pastries and Breads", "Cakes", "Desserts", "Drinks"],
     setCurrentRecipe: (currentRecipe) => set({ currentRecipe }),
     addRecipe: (recipe) => set((state) => ({ recipeList: [...state.recipeList, recipe], })),
     updateRecipe: (id, recipe) => set((state) => ({
@@ -17,7 +18,7 @@ export const useRecipeStore = create<Store>((set) => ({
     fetchRecipes: async () => {
         try {
             console.log("here");
-            
+
             const response = await axios.get('http://localhost:3000/api/recipe/get');
             set({ recipeList: response.data });
         } catch (error) {

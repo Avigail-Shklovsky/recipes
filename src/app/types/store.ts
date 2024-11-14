@@ -3,6 +3,7 @@ import { Recipe } from "./recipe";
 export interface Store {
     currentRecipe: Recipe | null;
     recipeList: Recipe[];
+    categoryList: string[];
     setCurrentRecipe: (recipe: Recipe) => void;
     addRecipe: (recipe: Recipe) => void;
     updateRecipe: (id: string, recipe: Recipe) => void;
