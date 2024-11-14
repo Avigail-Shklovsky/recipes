@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Recipe } from "../types/recipe";
 import Image from "next/image";
 import { useRecipeStore } from "../store/use-store/useRecipeStore";
+import { updateRecipeById } from "../services/recipe";
 
 interface cardProps {
   recipe: Recipe;
@@ -14,19 +15,17 @@ const Card: React.FC<cardProps> = ({ recipe, openCard }) => {
 
   const updateRecipe = useRecipeStore((state) => state.updateRecipe);
 
-  const toggleFavorite = () => {
+  const toggleFavorite = async () => {
     setFavorite((prev) => !prev);
     const newRecipe = {
-      _id: recipe._id,
-      name: recipe.name,
-      category: recipe.category,
-      imageUrl: recipe.imageUrl,
-      ingredients: recipe.ingredients,
-      instructions: recipe.instructions,
-      isFavorite: !recipe.isFavorite,
+      ...recipe,
+      isFavorite: !recipe.isFavorite
     };
     updateRecipe(recipe._id ? recipe._id : "", newRecipe);
+    await updateRecipeById(recipe._id ? recipe._id : "", newRecipe)
   };
+ 
+  
 
   return (
     <>

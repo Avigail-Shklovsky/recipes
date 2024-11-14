@@ -6,8 +6,6 @@ import Card from "@/app/components/Card";
 import RecipeModel from "./RecipeModel";
 import { Recipe } from "../types/recipe";
 
-import { deleteRecipeById } from "../services/recipe";
-
 
  
 
@@ -64,22 +62,23 @@ const RecipeList: React.FC<RecipeListProps> = ({ recipeList }) => {
       </div>
 
       <div className="mt-5 ml-3 mr-3">
-        {recipeList && (
-          <div className="grid grid-cols-5 gap-10">
-            {recipeList
-              //If isShowFavorite is true, it includes only recipes where r.isFavorite is true.
-              //If isShowFavorite is false, it includes all recipes without filtering based on isFavorite.
-              .filter((r) => !isShowFavorite || r.isFavorite)
-              .map((r) => (
-                <Card
-                  key={r._id}
-                  recipe={r}
-                  openCard={() => openOrCloseModel(r)}
-                />
-              ))}
+  {recipeList && (
+    <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+      {recipeList
+        .filter((r) => !isShowFavorite || r.isFavorite)
+        .map((r) => (
+          <div className="w-[250px] h-[350px]"  >
+          <Card
+            key={r._id}
+            recipe={r}
+            openCard={() => openOrCloseModel(r)}
+           
+          />
           </div>
-        )}
-      </div>
+        ))}
+    </div>
+  )}
+</div>
       {isOpen && (
         <div
           className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center"
