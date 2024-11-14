@@ -5,13 +5,22 @@ import { useRecipeStore } from "@/app/store/use-store/useRecipeStore";
 import Card from "@/app/components/Card";
 import RecipeModel from "./RecipeModel";
 import { Recipe } from "../types/recipe";
+
 import { deleteRecipeById } from "../services/recipe";
 
-const RecipeList = () => {
-  const [isOpen, setIsOpen] = useState(false); 
-  const [isShowFavorite, setIsShowFavorite] = useState(false);
+
+ 
+
+interface RecipeListProps {
+  recipeList: Recipe[];
+}
+
+const RecipeList: React.FC<RecipeListProps> = ({ recipeList }) => {
+  const [isOpen, setIsOpen] = useState(false);
+    const [isShowFavorite, setIsShowFavorite] = useState(false);
+
   const fetchRecipes = useRecipeStore((state) => state.fetchRecipes);
-  const recipeList = useRecipeStore((state) => state.recipeList);
+  const recipeListFromStore = useRecipeStore((state) => state.recipeList);
   const setCurrentRecipe = useRecipeStore((state) => state.setCurrentRecipe);
 
  
@@ -31,7 +40,7 @@ const RecipeList = () => {
 
   return (
     <div>
-      <div className="flex  mb-6">
+      <div className="flex  ml-6">
         <button
           onClick={() => setIsShowFavorite((prev) => !prev)}
           className={`px-6 py-2 text-xl font-semibold ${
@@ -54,9 +63,9 @@ const RecipeList = () => {
         </button>
       </div>
 
-      <div className="mt-5 ml-5">
+      <div className="mt-5 ml-3 mr-3">
         {recipeList && (
-          <div className="grid grid-cols-6 gap-20">
+          <div className="grid grid-cols-5 gap-10">
             {recipeList
               //If isShowFavorite is true, it includes only recipes where r.isFavorite is true.
               //If isShowFavorite is false, it includes all recipes without filtering based on isFavorite.
@@ -72,19 +81,15 @@ const RecipeList = () => {
         )}
       </div>
       {isOpen && (
-
-        <div 
+        <div
           className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center"
-
           onClick={closeModal}
         />
       )}
 
-
-      <div 
+      <div
         className={`fixed top-0 right-0 h-full w-70 bg-white shadow-lg z-50 p-4 transition-transform duration-40 ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
-
+          isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         <button
