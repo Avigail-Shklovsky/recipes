@@ -1,10 +1,11 @@
 import React from "react";
 import RecipeList from "./components/RecipeList";
+import { Filtering } from "./components/Filtering";
 
 const page = () => {
   return (
     <div>
-      <RecipeList></RecipeList>
+      <Filtering></Filtering>
     </div>
   );
 };
