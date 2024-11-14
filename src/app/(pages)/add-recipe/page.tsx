@@ -2,7 +2,7 @@
 import React from 'react'
 import AddRecipe from '@/app/components/AddRecipe';
 
-const Page = () => {
+const page = () => {
 
     return (
         <div>
@@ -11,4 +11,4 @@ const Page = () => {
     )
 }
 
-export default Page;
+export default page;
