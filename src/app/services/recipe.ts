@@ -33,10 +33,10 @@ export const updateRecipe = async (id: string, recipe: Recipe) => {
   }
 };
 
-export const deleteRecipe = async (id: number) => {
+export const deleteRecipeById = async (id: string) => {
   try {
     const response = await axios.delete(
-      `https://localhost:3000/api/delete/${id}`
+      `http://localhost:3000/api/delete/${id}`
     );
     return response.data;
   } catch (error) {

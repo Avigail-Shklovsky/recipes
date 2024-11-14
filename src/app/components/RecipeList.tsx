@@ -5,14 +5,16 @@ import { useRecipeStore } from "@/app/store/use-store/useRecipeStore";
 import Card from "@/app/components/Card";
 import RecipeModel from "./RecipeModel";
 import { Recipe } from "../types/recipe";
+import { deleteRecipeById } from "../services/recipe";
 
 const RecipeList = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false); 
+  const [isShowFavorite, setIsShowFavorite] = useState(false);
   const fetchRecipes = useRecipeStore((state) => state.fetchRecipes);
   const recipeList = useRecipeStore((state) => state.recipeList);
   const setCurrentRecipe = useRecipeStore((state) => state.setCurrentRecipe);
-  const [isShowFavorite, setIsShowFavorite] = useState(false);
 
+ 
   useEffect(() => {
     fetchRecipes();
   }, []);
@@ -26,6 +28,7 @@ const RecipeList = () => {
     setIsOpen(false);
     setCurrentRecipe(null);
   };
+
   return (
     <div>
       <div className="flex  mb-6">
@@ -91,7 +94,7 @@ const RecipeList = () => {
           ✖
         </button>
 
-        <RecipeModel />
+        <RecipeModel close={closeModal}/>
       </div>
     </div>
   );
