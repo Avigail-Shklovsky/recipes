@@ -38,6 +38,7 @@ export const Filtering = () => {
         </div>
       </div>
       <RecipeList recipeList={filteredRecipeListToSend}></RecipeList>
+     
     </>
   );
 };
