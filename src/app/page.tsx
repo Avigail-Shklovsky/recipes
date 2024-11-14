@@ -1,6 +1,6 @@
 import Homepage from "./components/Homepage";
 
-export const Home = () => {
+const Home = () => {
 
   return (
     <>
