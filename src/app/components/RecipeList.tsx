@@ -12,7 +12,6 @@ interface RecipeListProps {
 const RecipeList: React.FC<RecipeListProps> = ({ recipeList }) => {
   const [isOpen, setIsOpen] = useState(false);
   const fetchRecipes = useRecipeStore((state) => state.fetchRecipes);
-  const recipeListFromStore = useRecipeStore((state) => state.recipeList);
   const setCurrentRecipe = useRecipeStore((state) => state.setCurrentRecipe);
   const [isShowFavorite, setIsShowFavorite] = useState(false);
 
@@ -34,21 +33,19 @@ const RecipeList: React.FC<RecipeListProps> = ({ recipeList }) => {
       <div className="flex  ml-6">
         <button
           onClick={() => setIsShowFavorite((prev) => !prev)}
-          className={`px-6 py-2 text-xl font-semibold ${
-            !isShowFavorite
-              ? "bg-transparent text-[#7864EA] border-b-2 border-[#7864EA] font-bold"
-              : "bg-transparent text-gray-400 border-b-2 border-gray-400"
-          }`}
+          className={`px-6 py-2 text-xl font-semibold ${!isShowFavorite
+            ? "bg-transparent text-[#7864EA] border-b-2 border-[#7864EA] font-bold"
+            : "bg-transparent text-gray-400 border-b-2 border-gray-400"
+            }`}
         >
           All recipes
         </button>
         <button
           onClick={() => setIsShowFavorite((prev) => !prev)}
-          className={`px-6 py-2 text-xl font-semibold ${
-            isShowFavorite
-              ? "bg-transparent text-[#7864EA] border-b-2 border-[#7864EA] font-bold"
-              : "bg-transparent text-gray-400 border-b-2 border-gray-400"
-          }`}
+          className={`px-6 py-2 text-xl font-semibold ${isShowFavorite
+            ? "bg-transparent text-[#7864EA] border-b-2 border-[#7864EA] font-bold"
+            : "bg-transparent text-gray-400 border-b-2 border-gray-400"
+            }`}
         >
           Favorites
         </button>
@@ -56,7 +53,7 @@ const RecipeList: React.FC<RecipeListProps> = ({ recipeList }) => {
 
       <div className="mt-5 ml-5">
         {recipeList && (
-          <div className="grid grid-cols-6 gap-40">
+          <div className="grid grid-cols-5 gap-10">
             {recipeList
               //If isShowFavorite is true, it includes only recipes where r.isFavorite is true.
               //If isShowFavorite is false, it includes all recipes without filtering based on isFavorite.
@@ -72,20 +69,16 @@ const RecipeList: React.FC<RecipeListProps> = ({ recipeList }) => {
         )}
       </div>
       {isOpen && (
-
-        <div 
+        <div
           className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center"
-
           onClick={closeModal}
         />
       )}
 
 
-      <div 
-        className={`fixed top-0 right-0 h-full w-70 bg-white shadow-lg z-50 p-4 transition-transform duration-40 ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
-
-        }`}
+      <div
+        className={`fixed top-0 right-0 h-full w-70 bg-white shadow-lg z-50 p-4 transition-transform duration-40 ${isOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
       >
         <button
           onClick={closeModal}
