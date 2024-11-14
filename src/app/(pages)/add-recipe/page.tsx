@@ -8,7 +8,7 @@ const Page = () => {
 
     return (
         <div>
-            <button onClick={() => { router.push('/recipe-list') }} className='text-[#404445] font-normal mt-[30px] ml-[30px]'>‹ Back</button>
+            <button onClick={() => { router.push('/') }} className='text-[#404445] font-normal mt-[30px] ml-[30px]'>‹ Back</button>
             <AddRecipe />
         </div>
     )
