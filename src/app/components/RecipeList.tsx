@@ -5,11 +5,14 @@ import { useRecipeStore } from "@/app/store/use-store/useRecipeStore";
 import Card from "@/app/components/Card";
 import RecipeModel from "./RecipeModel";
 import { Recipe } from "../types/recipe";
+interface RecipeListProps {
+  recipeList: Recipe[];
+}
 
-const RecipeList = () => {
+const RecipeList: React.FC<RecipeListProps> = ({ recipeList }) => {
   const [isOpen, setIsOpen] = useState(false);
   const fetchRecipes = useRecipeStore((state) => state.fetchRecipes);
-  const recipeList = useRecipeStore((state) => state.recipeList);
+  const recipeListFromStore = useRecipeStore((state) => state.recipeList);
   const setCurrentRecipe = useRecipeStore((state) => state.setCurrentRecipe);
   const [isShowFavorite, setIsShowFavorite] = useState(false);
 
@@ -28,7 +31,7 @@ const RecipeList = () => {
   };
   return (
     <div>
-      <div className="flex  mb-6">
+      <div className="flex  ml-6">
         <button
           onClick={() => setIsShowFavorite((prev) => !prev)}
           className={`px-6 py-2 text-xl font-semibold ${
