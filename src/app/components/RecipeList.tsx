@@ -5,17 +5,25 @@ import { useRecipeStore } from "@/app/store/use-store/useRecipeStore";
 import Card from "@/app/components/Card";
 import RecipeModel from "./RecipeModel";
 import { Recipe } from "../types/recipe";
+
+import { deleteRecipeById } from "../services/recipe";
+
+
+ 
+
 interface RecipeListProps {
   recipeList: Recipe[];
 }
 
 const RecipeList: React.FC<RecipeListProps> = ({ recipeList }) => {
   const [isOpen, setIsOpen] = useState(false);
+    const [isShowFavorite, setIsShowFavorite] = useState(false);
+
   const fetchRecipes = useRecipeStore((state) => state.fetchRecipes);
   const recipeListFromStore = useRecipeStore((state) => state.recipeList);
   const setCurrentRecipe = useRecipeStore((state) => state.setCurrentRecipe);
-  const [isShowFavorite, setIsShowFavorite] = useState(false);
 
+ 
   useEffect(() => {
     fetchRecipes();
   }, []);
@@ -29,6 +37,7 @@ const RecipeList: React.FC<RecipeListProps> = ({ recipeList }) => {
     setIsOpen(false);
     setCurrentRecipe(null);
   };
+
   return (
     <div>
       <div className="flex  ml-6">
@@ -90,7 +99,7 @@ const RecipeList: React.FC<RecipeListProps> = ({ recipeList }) => {
           ✖
         </button>
 
-        <RecipeModel />
+        <RecipeModel close={closeModal}/>
       </div>
     </div>
   );
