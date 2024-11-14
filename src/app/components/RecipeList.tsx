@@ -56,7 +56,7 @@ const RecipeList: React.FC<RecipeListProps> = ({ recipeList }) => {
 
       <div className="mt-5 ml-5">
         {recipeList && (
-          <div className="grid grid-cols-6 gap-20">
+          <div className="grid grid-cols-6 gap-40">
             {recipeList
               //If isShowFavorite is true, it includes only recipes where r.isFavorite is true.
               //If isShowFavorite is false, it includes all recipes without filtering based on isFavorite.
