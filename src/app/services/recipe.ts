@@ -3,7 +3,7 @@ import { Recipe } from "../types/recipe";
 
 export const getRecipes = async () => {
   try {
-    const response = await axios.get("http://localhost:3000/api/get");
+    const response = await axios.get("/api/get");
     return response.data.data;
   } catch (error) {
     console.error("Error getting recipe:", error);
@@ -13,7 +13,7 @@ export const getRecipes = async () => {
 
 export const createRecipe = async (recipe: Recipe) => {
   try {
-    const response = await axios.post("http://localhost:3000/api/post", recipe);
+    const response = await axios.post("/api/post", recipe);
     return response.data;
   } catch (error) {
     console.log("Error creating recipe:", error);
@@ -24,7 +24,7 @@ export const createRecipe = async (recipe: Recipe) => {
 export const updateRecipeById = async (id: string, recipe: Recipe) => {
   try {
     const response = await axios.put(
-      `http://localhost:3000/api/put/${id}`, recipe
+      `/api/put/${id}`, recipe
     );
     return response.data;
   } catch (error) {
@@ -36,7 +36,7 @@ export const updateRecipeById = async (id: string, recipe: Recipe) => {
 export const deleteRecipeById = async (id: string) => {
   try {
     const response = await axios.delete(
-      `http://localhost:3000/api/delete/${id}`
+      `/api/delete/${id}`
     );
     return response.data;
   } catch (error) {
