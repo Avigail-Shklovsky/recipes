@@ -28,7 +28,7 @@ const RecipeList = () => {
   };
   return (
     <div>
-      <div className="flex  mb-6">
+      <div className="flex  m-6">
         <button
           onClick={() => setIsShowFavorite((prev) => !prev)}
           className={`px-6 py-2 text-xl font-semibold ${
