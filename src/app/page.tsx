@@ -5,7 +5,7 @@ import { useRecipeStore } from "./store/use-store/useRecipeStore";
 import RecipeList from "./components/RecipeList";
 import { Recipe } from "./types/recipe";
 
-export const Page = () => {
+export const page = () => {
 
   const router = useRouter();
 
@@ -83,4 +83,4 @@ export const Page = () => {
   );
 };
 
-export default Page;
+export default page;
