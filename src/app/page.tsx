@@ -8,7 +8,7 @@ const Page = () => {
 
   return (
     <div>
-      <div className="p-[40px]">
+      <div className="p-[40px] ">
         <header className="flex flex-col w-[90%]">
           <h1 className="text-[4vh] pb-[6vh]">Recipe List</h1>
           <button
