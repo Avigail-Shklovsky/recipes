@@ -1,6 +1,6 @@
 import Homepage from "./components/Homepage";
 
-export const page = () => {
+export const Page = () => {
 
   return (
     <>
@@ -9,4 +9,4 @@ export const page = () => {
   );
 };
 
-export default page;
+export default Page;
