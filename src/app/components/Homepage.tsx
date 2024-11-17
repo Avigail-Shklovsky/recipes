@@ -72,7 +72,6 @@ export const Homepage = () => {
                     </button>
                 </div>
             </header>
-            {/* <Pagination recipeList={filteredRecipeListToSend}></Pagination> */}
             <RecipeList recipeList={filteredRecipeList}></RecipeList>
         </div>
     );

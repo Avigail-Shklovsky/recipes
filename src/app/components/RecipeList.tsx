@@ -72,8 +72,6 @@ const RecipeList: React.FC<RecipeListProps> = ({ recipeList }) => {
         {pagedRecipes && (
           <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {pagedRecipes
-              //If isShowFavorite is true, it includes only recipes where r.isFavorite is true.
-              //If isShowFavorite is false, it includes all recipes without filtering based on isFavorite.
               .filter((r) => !isShowFavorite || r.isFavorite)
               .map((r) => (
                 <div className="w-[250px] h-[350px]" key={r._id}>
