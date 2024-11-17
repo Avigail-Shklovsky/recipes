@@ -10,14 +10,13 @@ export interface UserState {
 
 const useStore = create<UserState>((set, get) => ({
   currentUser: {
-    username: "",
     email: "",
     password: "",
   },
 
   getCurrentUser: () => {
     const user = get().currentUser;
-    if (user.username === '' && user.password === '') {
+    if (user.email === '' && user.password === '') {
       return null; 
     }
     return user; 
@@ -30,7 +29,7 @@ const useStore = create<UserState>((set, get) => ({
 
   logout: () =>
     set(() => ({
-      currentUser: { username: "", email: "", password: "" },
+      currentUser: {  email: "", password: "" },
     })),
 }));
 
