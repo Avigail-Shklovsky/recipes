@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 "use client";
 import React from "react";
 import { useRouter } from "next/navigation";
@@ -20,5 +21,19 @@ const page = () => {
     </div>
   );
 };
+=======
+
+import React from 'react'
+import AddRecipe from '@/app/components/AddRecipe';
+
+const page = () => {
+
+    return (
+        <div>
+            <AddRecipe />
+        </div>
+    )
+}
+>>>>>>> origin/master
 
 export default page;
