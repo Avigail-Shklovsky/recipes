@@ -6,7 +6,7 @@ import { z } from 'zod';
 import { createRecipe } from '../services/recipe';
 import { useRouter } from 'next/navigation'
 
-
+// Define a schema using Zod to validate the form data
 const formSchema = z.object({
     _id: z.string(),
     name: z.string().trim().min(3, "Recipe name must contain at least 3 characters").max(60, "Recipe name must contain at most 60 characters").min(1, "Recipe name is required"),
@@ -26,11 +26,13 @@ const AddRecipe = () => {
     const categoryList = useRecipeStore((state) => state.categoryList);
     const [ingredient, setIngredient] = useState<string>("");
 
+    // Handle form input changes
     const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
 
+    // Add an ingredient to the ingredients list
     const addIngredientHandler = () => {
         setFormData({
             ...formData,
@@ -39,6 +41,7 @@ const AddRecipe = () => {
         setIngredient("");
     };
 
+    // Handle form submission
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         try {
@@ -63,13 +66,13 @@ const AddRecipe = () => {
     return (
         <div className='p-[50px]'>
             <button
-        onClick={() => {
-          router.push("/");
-        }}
-        className="text-[#404445] font-normal mt-[30px] ml-[30px]"
-      >
-        ‹ Back
-      </button>
+                onClick={() => {
+                    router.push("/");
+                }}
+                className="text-[#404445] font-normal mt-[30px] ml-[30px]"
+            >
+                ‹ Back
+            </button>
             <h1 className='text-[4vh] pb-[6vh]'>Add Recipe</h1>
             <form onSubmit={handleSubmit} className='flex gap-[5vw]'>
                 <div className='flex flex-col gap-[5vh]'>

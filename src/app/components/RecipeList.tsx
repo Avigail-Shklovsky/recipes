@@ -26,21 +26,25 @@ const RecipeList: React.FC<RecipeListProps> = ({ recipeList }) => {
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
   const pagedRecipes = recipeList.slice(start, end);
 
+  // Handle page number click to change page
   const handlePageChange = (page: number) => {
     if (page >= 0 && page < totalPages) {
       setCurrentPage(page);
     }
   };
 
+  // Fetch recipes on initial render
   useEffect(() => {
     fetchRecipes();
   }, []);
 
+  // Toggle modal to show recipe details
   const openOrCloseModel = (recipe: Recipe) => {
     setCurrentRecipe(recipe);
     setIsOpen((prev) => !prev);
   };
 
+  // Close modal and clear current recipe
   const closeModal = () => {
     setIsOpen(false);
     setCurrentRecipe(null);
@@ -131,7 +135,6 @@ const RecipeList: React.FC<RecipeListProps> = ({ recipeList }) => {
       {/* end of pagination numbers */}
 
       {/* recipe modal */}
-
       {
         isOpen && (
           <div

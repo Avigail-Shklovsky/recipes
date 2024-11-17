@@ -15,6 +15,7 @@ const Card: React.FC<cardProps> = ({ recipe, openCard }) => {
 
   const updateRecipe = useRecipeStore((state) => state.updateRecipe);
 
+  // Function to toggle the favorite status of a recipe
   const toggleFavorite = async () => {
     setFavorite((prev) => !prev);
     const newRecipe = {
@@ -24,8 +25,6 @@ const Card: React.FC<cardProps> = ({ recipe, openCard }) => {
     updateRecipe(recipe._id ? recipe._id : "", newRecipe);
     await updateRecipeById(recipe._id ? recipe._id : "", newRecipe)
   };
-
-
 
   return (
     <>
