@@ -80,7 +80,7 @@ export const Homepage = () => {
             </div>
           </div>
           <button
-            className="self-end bg-[#7864EA] text-white rounded-sm p-[7px] w-[7vw] cursor-pointer justify-center"
+            className="self-end bg-[#7864EA] text-white rounded-sm p-[10px] min-w-[10%] text-[2vh] cursor-pointer justify-center"
             onClick={() => router.push("/add-recipe")}
             title="add recipe"
           >
