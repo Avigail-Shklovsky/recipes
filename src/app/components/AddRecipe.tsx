@@ -1,11 +1,12 @@
-"use client";
-import "./AddRecipe.css";
-import React, { useState } from "react";
-import { useRecipeStore } from "../store/use-store/useRecipeStore";
-import { z } from "zod";
-import { createRecipe } from "../services/recipe";
-import { useRouter } from "next/navigation";
+'use client'
+import './AddRecipe.css';
+import React, { useState } from 'react';
+import { useRecipeStore } from '../store/use-store/useRecipeStore';
+import { z } from 'zod';
+import { createRecipe } from '../services/recipe';
+import { useRouter } from 'next/navigation'
 
+// Define a schema using Zod to validate the form data
 const formSchema = z.object({
   _id: z.string(),
   name: z
@@ -56,154 +57,95 @@ const AddRecipe = () => {
   const categoryList = useRecipeStore((state) => state.categoryList);
   const [ingredient, setIngredient] = useState<string>("");
 
-  const handleChange = (
-    e:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLSelectElement>
-      | React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+    // Handle form input changes
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
 
-  const addIngredientHandler = () => {
-    setFormData({
-      ...formData,
-      ingredients: [...formData.ingredients, ingredient],
-    });
-    setIngredient("");
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      formSchema.parse(formData);
-      setErrors({});
-      console.log(formData);
-      alert("Form submitted successfully!");
-      createRecipe(formData);
-    } catch (err) {
-      if (err instanceof z.ZodError) {
-        const fieldErrors: { [key: string]: string } = {};
-        err.errors.forEach((error) => {
-          if (error.path[0]) {
-            fieldErrors[error.path[0].toString()] = error.message;
-          }
+    // Add an ingredient to the ingredients list
+    const addIngredientHandler = () => {
+        setFormData({
+            ...formData,
+            ingredients: [...formData.ingredients, ingredient]
         });
-        setErrors(fieldErrors);
-      }
-    }
-  };
+        setIngredient("");
+    };
 
-  return (
-    <>
-      <button
-        onClick={() => {
-          router.push("/");
-        }}
-        className="text-[#404445] font-normal mt-[30px] ml-[30px]"
-      >
-        ‹ Back
-      </button>
-      <div className="p-[50px]">
-        <h1 className="text-[4vh] pb-[6vh]">Add Recipe</h1>
-        <form onSubmit={handleSubmit} className="flex gap-[5vw]">
-          <div className="flex flex-col gap-[5vh]">
-            <span>
-              <input
-                type="text"
-                placeholder="Recipe name"
-                name="name"
-                value={formData.name}
-                className="input-box"
-                onChange={handleChange}
-              />
-              {errors.name && <p className="error-message">{errors.name}</p>}
-            </span>
-            <span>
-              <select
-                name="category"
-                id="category"
-                defaultValue=""
-                onChange={handleChange}
-                className="select-box cursor-pointer w-[30vw] md:w-[15vw]"
-              >
-                <option value="" disabled>
-                  Category
-                </option>
-                {categoryList &&
-                  categoryList.map((c: string) => (
-                    <option value={c} key={c}>
-                      {c}
-                    </option>
-                  ))}
-              </select>
-              {errors.category && (
-                <p className="error-message">{errors.category}</p>
-              )}
-            </span>
-            <span>
-              <input
-                type="url"
-                placeholder="Image URL"
-                name="imageUrl"
-                value={formData.imageUrl}
-                className="input-box"
-                onChange={handleChange}
-              />
-              {errors.imageUrl && (
-                <p className="error-message">{errors.imageUrl}</p>
-              )}
-            </span>
-            <div className="flex flex-row gap-[1vw]">
-              <span>
-                <input
-                  type="text"
-                  placeholder="Ingredients"
-                  name="ingredient"
-                  value={ingredient}
-                  className="input-box"
-                  onChange={(e) => setIngredient(e.target.value)}
-                />
-                <ul>
-                  {formData.ingredients.map((ingredient) => (
-                    <li key={ingredient}>{ingredient}</li>
-                  ))}
-                </ul>
-              </span>
-              <input
-                type="button"
-                value="+"
-                onClick={addIngredientHandler}
-                className="flex justify-center content-center bg-[#7864EA] text-white rounded-sm px-[6px] w-[30px] h-[30px] cursor-pointer"
-              />
-            </div>
-          </div>
-          <div className="flex flex-col gap-[4vh]">
-            <span>
-              <textarea
-                placeholder="Instructions"
-                name="instructions"
-                value={formData.instructions}
-                className="input-box instructions-input"
-                onChange={handleChange}
-              />
-              {errors.instructions && (
-                <p className="error-message min-w-[40vw]">
-                  {errors.instructions}
-                </p>
-              )}
-            </span>
-            <input
-              type="submit"
-              value="Add"
-              className="flex self-end bg-[#7864EA] text-white rounded-md p-[7px] min-w-[7vw] cursor-pointer"
-            />
-          </div>
-        </form>
-      </div>
-    </>
-  );
+    // Handle form submission
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        try {
+            formSchema.parse(formData);
+            setErrors({});
+            console.log(formData);
+            alert('Form submitted successfully!');
+            createRecipe(formData);
+        } catch (err) {
+            if (err instanceof z.ZodError) {
+                const fieldErrors: { [key: string]: string } = {};
+                err.errors.forEach((error) => {
+                    if (error.path[0]) {
+                        fieldErrors[error.path[0].toString()] = error.message;
+                    }
+                });
+                setErrors(fieldErrors);
+            }
+        }
+    };
+
+    return (
+        <div className='p-[50px]'>
+            <button
+                onClick={() => {
+                    router.push("/");
+                }}
+                className="text-[#404445] font-normal mt-[30px] ml-[30px]"
+            >
+                ‹ Back
+            </button>
+            <h1 className='text-[4vh] pb-[6vh]'>Add Recipe</h1>
+            <form onSubmit={handleSubmit} className='flex gap-[5vw]'>
+                <div className='flex flex-col gap-[5vh]'>
+                    <span>
+                        <input type="text" placeholder='Recipe name' name='name' value={formData.name} className='input-box' onChange={handleChange} />
+                        {errors.name && <p className='error-message'>{errors.name}</p>}
+                    </span>
+                    <span>
+                        <select name="category" id="category" defaultValue="" onChange={handleChange} className='select-box cursor-pointer'>
+                            <option value="" disabled>Category</option>
+                            {categoryList && categoryList.map((c: string) => <option value={c} key={c}>{c}</option>)}
+                        </select>
+                        {errors.category && <p className='error-message'>{errors.category}</p>}
+                    </span>
+                    <span>
+                        <input type="url" placeholder='Image URL' name='imageUrl' value={formData.imageUrl} className='input-box' onChange={handleChange} />
+                        {errors.imageUrl && <p className='error-message'>{errors.imageUrl}</p>}
+                    </span>
+                    <div className='flex flex-row gap-[1vw]'>
+                        <span>
+                            <input type="text" placeholder='Ingredients' name='ingredient' value={ingredient} className='input-box' onChange={(e) => setIngredient(e.target.value)} />
+                            <ul>{formData.ingredients.map((ingredient) => (<li key={ingredient}>{ingredient}</li>))}</ul>
+                        </span>
+                        <input type="button" value="+" onClick={addIngredientHandler} className='flex justify-center content-center bg-[#7864EA] text-white rounded-sm px-[6px] w-[30px] h-[30px] cursor-pointer' />
+                    </div>
+                </div>
+                <div className='flex flex-col gap-[4vh]'>
+                    <span>
+                        <textarea
+                            placeholder='Instructions'
+                            name='instructions'
+                            value={formData.instructions}
+                            className='input-box w-[50vw] h-[32vh]'
+                            onChange={handleChange}
+                        />
+                        {errors.instructions && <p className='error-message min-w-[40vw]'>{errors.instructions}</p>}
+                    </span>
+                    <input type="submit" value="Add" className='flex self-end bg-[#7864EA] text-white rounded-md p-[7px] w-[7vw] cursor-pointer' />
+                </div>
+            </form>
+        </div>
+    )
 };
 
 export default AddRecipe;
