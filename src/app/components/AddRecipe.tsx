@@ -1,5 +1,4 @@
 'use client'
-import './AddRecipe.css';
 import React, { useState } from 'react';
 import { useRecipeStore } from '../store/use-store/useRecipeStore';
 import { z } from 'zod';
@@ -22,14 +21,7 @@ const formSchema = z.object({
         .trim()
         .min(1, "Image URL is required"),
     ingredients: z
-        .array(
-            z
-                .string()
-                .trim()
-                .min(2, "Ingredient must contain at least 2 characters")
-                .max(20, "Ingredient must contain at most 20 characters")
-                .regex(/^[A-Za-z]+$/, "Ingredient must contain only letters")
-        )
+        .array(z.string())
         .min(1, "Ingredient is required"),
     instructions: z
         .string()
@@ -113,7 +105,7 @@ const AddRecipe = () => {
                             {errors.name && <p className='error-message'>{errors.name}</p>}
                         </span>
                         <span>
-                            <select name="category" id="category" defaultValue="" onChange={handleChange} className='select-box cursor-pointer'>
+                            <select name="category" id="category" defaultValue="" onChange={handleChange} className='w-[30vw] md:w-[15vw] rounded-md px-[10px] py-[3px] border-[0.5px] border-gray-300 border-solid text-[#A2A4B5] cursor-pointer focus:text-black'>
                                 <option value="" disabled>Category</option>
                                 {categoryList && categoryList.map((c: string) => <option value={c} key={c}>{c}</option>)}
                             </select>
@@ -127,6 +119,7 @@ const AddRecipe = () => {
                             <span>
                                 <input type="text" placeholder='Ingredients' name='ingredient' value={ingredient} className='input-box' onChange={(e) => setIngredient(e.target.value)} />
                                 <ul>{formData.ingredients.map((ingredient) => (<li key={ingredient}>{ingredient}</li>))}</ul>
+                                {errors.ingredients && <p className='error-message'>{errors.ingredients}</p>}
                             </span>
                             <input type="button" value="+" onClick={addIngredientHandler} className='flex justify-center content-center bg-[#7864EA] text-white rounded-sm px-[6px] w-[30px] h-[30px] cursor-pointer' />
                         </div>
@@ -137,7 +130,7 @@ const AddRecipe = () => {
                                 placeholder='Instructions'
                                 name='instructions'
                                 value={formData.instructions}
-                                className='input-box instructions-input'
+                                className='input-box w-[27vw] h-[29vh] md:w-[50vw] md:h-[32vh]'
                                 onChange={handleChange}
                             />
                             {errors.instructions && <p className='error-message min-w-[40vw]'>{errors.instructions}</p>}
