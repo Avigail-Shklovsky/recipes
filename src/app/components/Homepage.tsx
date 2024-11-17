@@ -11,10 +11,10 @@ export const Homepage = () => {
   const [categoryFilter, setCategoryFilter] = useState("All");
   const [searchInput, setSearchInput] = useState("");
   const recipeList = useRecipeStore((state) => state.recipeList);
-  const [filteredRecipeList, setFilteredRecipeList] =
-    useState<Recipe[]>(recipeList);
+  const [filteredRecipeList, setFilteredRecipeList] = useState<Recipe[]>(recipeList);
   const categoryList = useRecipeStore((state) => state.categoryList);
 
+  //filter recipes based on selected category and search input
   useEffect(() => {
     if (recipeList) {
       const filteredList = recipeList.filter((recipe) => {
@@ -31,10 +31,12 @@ export const Homepage = () => {
     }
   }, [categoryFilter, searchInput, recipeList]);
 
+  // Handler function for changing the category filter
   const handleCategoryFilter = (e: { target: { value: string } }) => {
     setCategoryFilter(e.target.value);
   };
 
+  // Handler function for updating the search input
   const handleChangeSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchInput(e.target.value);
   };
@@ -89,7 +91,6 @@ export const Homepage = () => {
 
         </div>
       </header>
-      {/* <Pagination recipeList={filteredRecipeListToSend}></Pagination> */}
       <RecipeList recipeList={filteredRecipeList}></RecipeList>
     </div>
   );

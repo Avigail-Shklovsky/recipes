@@ -3,25 +3,27 @@ import { useRecipeStore } from "../store/use-store/useRecipeStore";
 import Image from "next/image";
 import { deleteRecipeById, updateRecipeById } from "../services/recipe";
 
-interface recupeModelProps {
+interface recipeModelProps {
   close: () => void;
 }
 
-const RecipeModel: React.FC<recupeModelProps> = ({ close }) => {
+const RecipeModel: React.FC<recipeModelProps> = ({ close }) => {
+  const [favorite, setFavorite] = useState(false);
+
   const currentRecipe = useRecipeStore((state) => state.currentRecipe);
   const updateRecipe = useRecipeStore((state) => state.updateRecipe);
   const deleteRecipe = useRecipeStore((state) => state.deleteRecipe);
-  const [favorite, setFavorite] = useState(false);
 
-  // עדכון המצב של favorite
+
+  // UseEffect hook to set the favorite state when currentRecipe changes
   useEffect(() => {
     if (currentRecipe) {
       setFavorite(currentRecipe.isFavorite);
     }
   }, [currentRecipe]);
 
-  // פונקציה להחלפת מצב המועדף
-  const toggleFavorite = async() => {
+  // Function to toggle the favorite state
+  const toggleFavorite = async () => {
     setFavorite((prev) => !prev);
     if (currentRecipe) {
       const newRecipe = {
@@ -33,6 +35,7 @@ const RecipeModel: React.FC<recupeModelProps> = ({ close }) => {
     }
   };
 
+  // Function to handle recipe deletion
   const handleDeleteRecipe = async (id: string) => {
     await deleteRecipeById(id);
     deleteRecipe(id);
@@ -46,79 +49,72 @@ const RecipeModel: React.FC<recupeModelProps> = ({ close }) => {
       ) : (
         <>
           <div className="flex flex-col sm:flex-row">
-  {/* תמונה */}
-  <div className="w-full sm:w-[300px] h-[300px] mb-4 sm:mb-0">
-    <Image
-      className="rounded-t-xl object-cover w-full h-full"
-      src={currentRecipe?.imageUrl || ""}
-      width={300}
-      height={300}
-      alt={`${currentRecipe?.name} picture`}
-    />
-  </div>
+            <div className="w-full sm:w-[300px] h-[300px] mb-4 sm:mb-0">
+              <Image
+                className="rounded-t-xl object-cover w-full h-full"
+                src={currentRecipe?.imageUrl || ""}
+                width={300}
+                height={300}
+                alt={`${currentRecipe?.name} picture`}
+              />
+            </div>
+            <div className="w-full sm:w-2/3 pl-0 sm:pl-6 flex flex-col justify-start">
+              <h2 className="text-2xl sm:text-3xl font-semibold text-gray-800 dark:text-white">
+                {currentRecipe?.name}
+              </h2>
+              <div className="flex items-center mt-2 gap-2">
+                <p className="text-md sm:text-lg text-gray-500 dark:text-gray-300">
+                  {currentRecipe?.category}
+                </p>
 
-  {/* מידע על המתכון */}
-  <div className="w-full sm:w-2/3 pl-0 sm:pl-6 flex flex-col justify-start">
-    <h2 className="text-2xl sm:text-3xl font-semibold text-gray-800 dark:text-white">
-      {currentRecipe?.name}
-    </h2>
-    <div className="flex items-center mt-2 gap-2">
-      <p className="text-md sm:text-lg text-gray-500 dark:text-gray-300">
-        {currentRecipe?.category}
-      </p>
-
-      <button onClick={toggleFavorite} className="flex items-center">
-        {favorite ? (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
-            />
-          </svg>
-        ) : (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
-            />
-          </svg>
-        )}
-      </button>
-    </div>
-
-    {/* רשימת חומרים */}
-    <div className="mt-4 sm:mt-6">
-      <h3 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-white">
-        Ingredients:
-      </h3>
-      <ul className="list-disc list-inside text-gray-700 dark:text-gray-300 mt-2">
-        {currentRecipe?.ingredients?.map((ingredient, index) => (
-          <li key={index} className="text-gray-600 dark:text-gray-300">
-            {ingredient}
-          </li>
-        ))}
-      </ul>
-    </div>
-  </div>
-</div>
-
-          {/* הוראות מתחת לתמונה ולמידע */}
+                <button onClick={toggleFavorite} className="flex items-center">
+                  {favorite ? (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
+                      />
+                    </svg>
+                  ) : (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
+                      />
+                    </svg>
+                  )}
+                </button>
+              </div>
+              <div className="mt-4 sm:mt-6">
+                <h3 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-white">
+                  Ingredients:
+                </h3>
+                <ul className="list-disc list-inside text-gray-700 dark:text-gray-300 mt-2">
+                  {currentRecipe?.ingredients?.map((ingredient, index) => (
+                    <li key={index} className="text-gray-600 dark:text-gray-300">
+                      {ingredient}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
           <div className="mt-6">
             <h3 className="text-xl font-semibold text-gray-800 dark:text-white">
               Instructions
@@ -129,7 +125,6 @@ const RecipeModel: React.FC<recupeModelProps> = ({ close }) => {
           </div>
         </>
       )}
-      {/* אייקון מחיקה */}
       <button
         onClick={() => {
           if (currentRecipe?._id) {
@@ -138,7 +133,7 @@ const RecipeModel: React.FC<recupeModelProps> = ({ close }) => {
             console.error('No recipe ID available');
           }
         }}
-         
+
         className="absolute bottom-4 right-4 p-2 sm:p-3 bg-red-500 text-white rounded-full hover:bg-red-600"
         type="button"
       >
