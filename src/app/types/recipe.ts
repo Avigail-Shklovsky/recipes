@@ -1,3 +1,4 @@
+// recipe type for project usage
 export interface Recipe {
   _id: string;
   name: string;
