@@ -22,9 +22,14 @@ const RecipeList: React.FC<RecipeListProps> = ({ recipeList }) => {
   const perPage = 5;
   const start = perPage * currentPage;
   const end = start + perPage;
-  const totalPages = Math.ceil(recipeList.length / perPage);
+
+  const filteredRecipes = isShowFavorite
+    ? recipeList.filter((r) => r.isFavorite)
+    : recipeList;
+
+  const totalPages = Math.ceil(filteredRecipes.length / perPage);
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
-  const pagedRecipes = recipeList.slice(start, end);
+  const pagedRecipes = filteredRecipes.slice(start, end);
 
   // Handle page number click to change page
   const handlePageChange = (page: number) => {
@@ -35,8 +40,9 @@ const RecipeList: React.FC<RecipeListProps> = ({ recipeList }) => {
 
   // Fetch recipes on initial render
   useEffect(() => {
+    setCurrentPage(0);
     fetchRecipes();
-  }, []);
+  }, [isShowFavorite]);
 
   // Toggle modal to show recipe details
   const openOrCloseModel = (recipe: Recipe) => {
@@ -56,35 +62,32 @@ const RecipeList: React.FC<RecipeListProps> = ({ recipeList }) => {
         <div className="flex ml-6 py-8">
           <button
             onClick={() => setIsShowFavorite((prev) => !prev)}
-            className={`px-6 py-2 text-xl font-semibold ${!isShowFavorite
-              ? "bg-transparent text-[#7864EA] border-b-2 border-[#7864EA] font-bold"
-              : "bg-transparent text-gray-400 border-b-2 border-gray-400"
-              }`}
+            className={`px-6 py-2 text-xl font-semibold ${
+              !isShowFavorite
+                ? "bg-transparent text-[#7864EA] border-b-2 border-[#7864EA] font-bold"
+                : "bg-transparent text-gray-400 border-b-2 border-gray-400"
+            }`}
           >
             All recipes
           </button>
           <button
             onClick={() => setIsShowFavorite((prev) => !prev)}
-            className={`px-6 py-2 text-xl font-semibold ${isShowFavorite
-              ? "bg-transparent text-[#7864EA] border-b-2 border-[#7864EA] font-bold"
-              : "bg-transparent text-gray-400 border-b-2 border-gray-400"
-              }`}
+            className={`px-6 py-2 text-xl font-semibold ${
+              isShowFavorite
+                ? "bg-transparent text-[#7864EA] border-b-2 border-[#7864EA] font-bold"
+                : "bg-transparent text-gray-400 border-b-2 border-gray-400"
+            }`}
           >
             Favorites
           </button>
         </div>
         {pagedRecipes && (
           <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-            {pagedRecipes
-              .filter((r) => !isShowFavorite || r.isFavorite)
-              .map((r) => (
-                <div className="w-[250px] h-[350px]" key={r._id}>
-                  <Card
-                    recipe={r}
-                    openCard={() => openOrCloseModel(r)}
-                  />
-                </div>
-              ))}
+            {pagedRecipes.map((r) => (
+              <div className="w-[250px] h-[350px]" key={r._id}>
+                <Card recipe={r} openCard={() => openOrCloseModel(r)} />
+              </div>
+            ))}
           </div>
         )}
       </div>
@@ -135,17 +138,16 @@ const RecipeList: React.FC<RecipeListProps> = ({ recipeList }) => {
       {/* end of pagination numbers */}
 
       {/* recipe modal */}
-      {
-        isOpen && (
-          <div
-            className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center"
-            onClick={closeModal}
-          />
-        )
-      }
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center"
+          onClick={closeModal}
+        />
+      )}
       <div
-        className={`fixed top-0 right-0 h-full w-70 bg-white shadow-lg z-50 p-4 transition-transform duration-40 ${isOpen ? "translate-x-0" : "translate-x-full"
-          }`}
+        className={`fixed top-0 right-0 h-full w-70 bg-white shadow-lg z-50 p-4 transition-transform duration-40 ${
+          isOpen ? "translate-x-0" : "translate-x-full"
+        }`}
       >
         <button
           onClick={closeModal}
@@ -155,7 +157,6 @@ const RecipeList: React.FC<RecipeListProps> = ({ recipeList }) => {
         </button>
 
         <RecipeModel close={closeModal} />
-
       </div>
     </>
   );
