@@ -1,5 +1,9 @@
 .input-box {
-  @apply min-w-[10vw] rounded-md px-[10px] py-[3px] border-[0.5px] border-gray-300 border-solid;
+  @apply w-[30vw] md:w-[15vw] rounded-md px-[10px] py-[3px] border-[0.5px] border-gray-300 border-solid;
+}
+
+.instructions-input {
+  @apply w-[27vw] h-[29vh] md:w-[50vw] md:h-[32vh]
 }
 
 .error-message {

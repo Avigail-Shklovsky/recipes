@@ -8,23 +8,54 @@ import { useRouter } from 'next/navigation'
 
 // Define a schema using Zod to validate the form data
 const formSchema = z.object({
-    _id: z.string(),
-    name: z.string().trim().min(3, "Recipe name must contain at least 3 characters").max(60, "Recipe name must contain at most 60 characters").min(1, "Recipe name is required"),
-    category: z.string().trim().min(1, "Category is required"),
-    imageUrl: z.string().url("Invalid URL").trim().min(1, "Image URL is required"),
-    ingredients: z.array(z.string().trim().min(2, "Ingredient must contain at least 2 characters").max(20, "Ingredient must contain at most 20 characters").regex(/^[A-Za-z]+$/, "Ingredient must contain only letters")).min(1, "Ingredient is required"),
-    instructions: z.string().trim().min(20, "Instructions must contain at least 20 characters").max(600, "Ingredient must contain at most 600 characters").min(1, "Instructions are required"),
-    isFavorite: z.boolean(),
+  _id: z.string(),
+  name: z
+    .string()
+    .trim()
+    .min(3, "Recipe name must contain at least 3 characters")
+    .max(60, "Recipe name must contain at most 60 characters")
+    .min(1, "Recipe name is required"),
+  category: z.string().trim().min(1, "Category is required"),
+  imageUrl: z
+    .string()
+    .url("Invalid URL")
+    .trim()
+    .min(1, "Image URL is required"),
+  ingredients: z
+    .array(
+      z
+        .string()
+        .trim()
+        .min(2, "Ingredient must contain at least 2 characters")
+        .max(20, "Ingredient must contain at most 20 characters")
+        .regex(/^[A-Za-z]+$/, "Ingredient must contain only letters")
+    )
+    .min(1, "Ingredient is required"),
+  instructions: z
+    .string()
+    .trim()
+    .min(20, "Instructions must contain at least 20 characters")
+    .max(600, "Ingredient must contain at most 600 characters")
+    .min(1, "Instructions are required"),
+  isFavorite: z.boolean(),
 });
 
 const AddRecipe = () => {
-    const router = useRouter()
+  const router = useRouter();
 
-    const [formData, setFormData] = useState<z.infer<typeof formSchema>>({ _id: "", name: "", category: "", imageUrl: "", ingredients: [], instructions: "", isFavorite: false });
-    const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [formData, setFormData] = useState<z.infer<typeof formSchema>>({
+    _id: "",
+    name: "",
+    category: "",
+    imageUrl: "",
+    ingredients: [],
+    instructions: "",
+    isFavorite: false,
+  });
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-    const categoryList = useRecipeStore((state) => state.categoryList);
-    const [ingredient, setIngredient] = useState<string>("");
+  const categoryList = useRecipeStore((state) => state.categoryList);
+  const [ingredient, setIngredient] = useState<string>("");
 
     // Handle form input changes
     const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
