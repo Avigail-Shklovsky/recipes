@@ -137,7 +137,7 @@ const AddRecipe = () => {
                                 placeholder='Instructions'
                                 name='instructions'
                                 value={formData.instructions}
-                                className='input-box w-[50vw] h-[32vh]'
+                                className='input-box instructions-input'
                                 onChange={handleChange}
                             />
                             {errors.instructions && <p className='error-message min-w-[40vw]'>{errors.instructions}</p>}
