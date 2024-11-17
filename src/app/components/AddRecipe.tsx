@@ -20,7 +20,7 @@ const formSchema = z.object({
     .url("Invalid URL")
     .trim()
     .min(1, "Image URL is required"),
-  ingredients: z.array(z.string()).min(1, "Recipe name is required"),
+  ingredients: z.array(z.string()).min(1, "At least one ingredient is  required"),
   instructions: z
     .string()
     .trim()
