@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import { useRecipeStore } from '../store/use-store/useRecipeStore';
 import { z } from 'zod';
 import { createRecipe } from '../services/recipe';
+import { useRouter } from 'next/navigation'
+
 
 const formSchema = z.object({
     _id: z.string(),
@@ -16,6 +18,7 @@ const formSchema = z.object({
 });
 
 const AddRecipe = () => {
+    const router = useRouter()
 
     const [formData, setFormData] = useState<z.infer<typeof formSchema>>({ _id: "", name: "", category: "", imageUrl: "", ingredients: [], instructions: "", isFavorite: false });
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -59,6 +62,14 @@ const AddRecipe = () => {
 
     return (
         <div className='p-[50px]'>
+            <button
+        onClick={() => {
+          router.push("/");
+        }}
+        className="text-[#404445] font-normal mt-[30px] ml-[30px]"
+      >
+        ‹ Back
+      </button>
             <h1 className='text-[4vh] pb-[6vh]'>Add Recipe</h1>
             <form onSubmit={handleSubmit} className='flex gap-[5vw]'>
                 <div className='flex flex-col gap-[5vh]'>
@@ -81,7 +92,6 @@ const AddRecipe = () => {
                         <span>
                             <input type="text" placeholder='Ingredients' name='ingredient' value={ingredient} className='input-box' onChange={(e) => setIngredient(e.target.value)} />
                             <ul>{formData.ingredients.map((ingredient) => (<li key={ingredient}>{ingredient}</li>))}</ul>
-                            {/* {errors.ingredients && <p className='error-message'>{errors.ingredients}</p>} */}
                         </span>
                         <input type="button" value="+" onClick={addIngredientHandler} className='flex justify-center content-center bg-[#7864EA] text-white rounded-sm px-[6px] w-[30px] h-[30px] cursor-pointer' />
                     </div>

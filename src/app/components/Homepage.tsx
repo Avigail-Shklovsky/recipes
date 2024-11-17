@@ -39,6 +39,7 @@ export const Homepage = () => {
     setSearchInput(e.target.value);
   };
 
+
   return (
     <div className="p-[40px] overflow-hidden">
       <header className="flex flex-col w-[90%]">
@@ -85,6 +86,7 @@ export const Homepage = () => {
           >
             Add Recipe
           </button>
+
         </div>
       </header>
       {/* <Pagination recipeList={filteredRecipeListToSend}></Pagination> */}
