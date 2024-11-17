@@ -55,7 +55,7 @@ const AddRecipe = () => {
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   const categoryList = useRecipeStore(
-    (state: { categoryList: any }) => state.categoryList
+    (state: { categoryList:string[] }) => state.categoryList
   );
   const [ingredient, setIngredient] = useState<string>("");
 
@@ -182,8 +182,8 @@ const AddRecipe = () => {
                       ingredient:
                         | boolean
                         | React.ReactElement<
-                            any,
-                            string | React.JSXElementConstructor<any>
+                        
+                            string
                           >
                         | Iterable<React.ReactNode>
                         | Promise<React.AwaitedReactNode>
