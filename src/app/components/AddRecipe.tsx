@@ -7,8 +7,22 @@ import { useRouter } from 'next/navigation'
 
 // Define a schema using Zod to validate the form data
 const formSchema = z.object({
-    _id: z.string(),
-    name: z
+  _id: z.string(),
+  name: z
+    .string()
+    .trim()
+    .min(3, "Recipe name must contain at least 3 characters")
+    .max(60, "Recipe name must contain at most 60 characters")
+    .min(1, "Recipe name is required"),
+  category: z.string().trim().min(1, "Category is required"),
+  imageUrl: z
+    .string()
+    .url("Invalid URL")
+    .trim()
+    .min(1, "Image URL is required"),
+  ingredients: z
+    .array(
+      z
         .string()
         .trim()
         .min(3, "Recipe name must contain at least 3 characters")
@@ -33,58 +47,70 @@ const formSchema = z.object({
 });
 
 const AddRecipe = () => {
-    const router = useRouter();
+  const router = useRouter();
 
-    const [formData, setFormData] = useState<z.infer<typeof formSchema>>({
-        _id: "",
-        name: "",
-        category: "",
-        imageUrl: "",
-        ingredients: [],
-        instructions: "",
-        isFavorite: false,
+  const [formData, setFormData] = useState<z.infer<typeof formSchema>>({
+    _id: "",
+    name: "",
+    category: "",
+    imageUrl: "",
+    ingredients: [],
+    instructions: "",
+    isFavorite: false,
+  });
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
+  const categoryList = useRecipeStore(
+    (state: { categoryList:string[] }) => state.categoryList
+  );
+  const [ingredient, setIngredient] = useState<string>("");
+
+  // Handle form input changes
+  const handleChange = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  // Add an ingredient to the ingredients list
+  const addIngredientHandler = () => {
+    setFormData({
+      ...formData,
+      ingredients: [...formData.ingredients, ingredient],
     });
-    const [errors, setErrors] = useState<{ [key: string]: string }>({});
+    setIngredient("");
+  };
 
-    const categoryList = useRecipeStore((state) => state.categoryList);
-    const [ingredient, setIngredient] = useState<string>("");
-
-    // Handle form input changes
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-    };
-
-    // Add an ingredient to the ingredients list
-    const addIngredientHandler = () => {
-        setFormData({
-            ...formData,
-            ingredients: [...formData.ingredients, ingredient]
-        });
-        setIngredient("");
-    };
-
-    // Handle form submission
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        try {
-            formSchema.parse(formData);
-            setErrors({});
-            console.log(formData);
-            alert('Form submitted successfully!');
-            createRecipe(formData);
-        } catch (err) {
-            if (err instanceof z.ZodError) {
-                const fieldErrors: { [key: string]: string } = {};
-                err.errors.forEach((error) => {
-                    if (error.path[0]) {
-                        fieldErrors[error.path[0].toString()] = error.message;
-                    }
-                });
-                setErrors(fieldErrors);
+  // Handle form submission
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      formSchema.parse(formData);
+      setErrors({});
+      console.log(formData);
+      alert("Form submitted successfully!");
+      createRecipe(formData);
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        const fieldErrors: { [key: string]: string } = {};
+        err.errors.forEach(
+          (error: {
+            path: { toString: () => string | number }[];
+            message: string;
+          }) => {
+            if (error.path[0]) {
+              fieldErrors[error.path[0].toString()] = error.message;
             }
-        }
-    };
+          }
+        );
+        setErrors(fieldErrors);
+      }
+    }
+  };
 
     return (
         <>
@@ -139,8 +165,32 @@ const AddRecipe = () => {
                     </div>
                 </form>
             </div>
-        </>
-    )
+          </div>
+          <div className="flex flex-col gap-[4vh]">
+            <span>
+              <textarea
+                placeholder="Instructions"
+                name="instructions"
+                value={formData.instructions}
+                className="input-box instructions-input"
+                onChange={handleChange}
+              />
+              {errors.instructions && (
+                <p className="error-message min-w-[40vw]">
+                  {errors.instructions}
+                </p>
+              )}
+            </span>
+            <input
+              type="submit"
+              value="Add"
+              className="flex self-end bg-[#7864EA] text-white rounded-md p-[7px] w-[7vw] cursor-pointer"
+            />
+          </div>
+        </form>
+      </div>
+    </>
+  );
 };
 
 export default AddRecipe;
