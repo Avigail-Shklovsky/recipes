@@ -1,6 +1,9 @@
 import axios from "axios";
 import { Recipe } from "../types/recipe";
 
+// CRUD  from server
+
+// get all recipes 
 export const getRecipes = async () => {
   try {
     const response = await axios.get("/api/get");
@@ -11,6 +14,7 @@ export const getRecipes = async () => {
   }
 };
 
+// create new recipe
 export const createRecipe = async (recipe: Recipe) => {
   try {
     const response = await axios.post("/api/post", recipe);
@@ -21,11 +25,10 @@ export const createRecipe = async (recipe: Recipe) => {
   }
 };
 
+// update a recipe by id
 export const updateRecipeById = async (id: string, recipe: Recipe) => {
   try {
-    const response = await axios.put(
-      `/api/put/${id}`, recipe
-    );
+    const response = await axios.put(`/api/put/${id}`, recipe);
     return response.data;
   } catch (error) {
     console.log("Error updating recipe:", error);
@@ -33,11 +36,10 @@ export const updateRecipeById = async (id: string, recipe: Recipe) => {
   }
 };
 
+// delete a recipe by id
 export const deleteRecipeById = async (id: string) => {
   try {
-    const response = await axios.delete(
-      `/api/delete/${id}`
-    );
+    const response = await axios.delete(`/api/delete/${id}`);
     return response.data;
   } catch (error) {
     console.log("Error deleting recipe", error);

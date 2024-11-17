@@ -81,17 +81,16 @@ export const Homepage = () => {
             </div>
           </div>
           <button
-  className="self-end bg-[#7864EA] text-white rounded-sm 
+            className="self-end bg-[#7864EA] text-white rounded-sm 
              p-2 sm:p-3 md:p-4 
              w-[30vw] sm:w-[20vw] md:w-[15vw] lg:w-[10vw] 
              text-sm sm:text-base md:text-lg 
              cursor-pointer justify-center"
-  onClick={() => router.push("/add-recipe")}
-  title="add recipe"
->
-  Add Recipe
-</button>
-
+            onClick={() => router.push("/add-recipe")}
+            title="add recipe"
+          >
+            Add Recipe
+          </button>
         </div>
       </header>
       <RecipeList recipeList={filteredRecipeList}></RecipeList>
