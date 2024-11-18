@@ -56,6 +56,7 @@ export const LoginForm = () => {
             onChange={(e) => setEmail(e.target.value)}
             id="email"
             type="email"
+            autoComplete="email"
           />
         </div>
         <div className="grid w-full items-center gap-1.5">
@@ -67,7 +68,7 @@ export const LoginForm = () => {
             onChange={(e) => setPassword(e.target.value)}
             id="password"
             type="password"
-            autoComplete="current-password"
+            autoComplete="password"
           />
         </div>
         <button className="w-full bg-[#7864EA] text-white py-2 mt-4 rounded">
