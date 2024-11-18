@@ -6,7 +6,9 @@ import { Recipe } from "../types/recipe";
 // get all recipes 
 export const getRecipes = async () => {
   try {
-    const response = await axios.get("/api/get");
+    const response = await axios.get("/api/get",{
+      withCredentials: true,
+    });
     return response.data.data;
   } catch (error) {
     console.error("Error getting recipe:", error);
