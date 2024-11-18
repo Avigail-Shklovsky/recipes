@@ -14,7 +14,7 @@ export const LoginForm = () => {
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("NODE_ENV:", process.env.NODE_ENV);
+       console.error("NODE_ENV:", process.env.NODE_ENV);
     try {
       const response = await loginAxiosForGetToken(email, password);
       if (response) {
