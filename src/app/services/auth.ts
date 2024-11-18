@@ -7,6 +7,8 @@ export async function loginAxiosForGetToken(email: string, password: string) {
       password,
     });
 
+    console.log("respone",response);
+    
     if (response.data.token) {
       return true;
     }

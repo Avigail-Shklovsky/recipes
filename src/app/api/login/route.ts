@@ -4,6 +4,8 @@ import jwt from 'jsonwebtoken'
 export async function POST(request: NextRequest){
     const {email ,password}=await request.json();
 
+    console.log("email",email);
+    
     if(email==="user@example.com" && password ==="123456789"){
 
         //creat token with jwt
