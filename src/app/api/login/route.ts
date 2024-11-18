@@ -17,7 +17,7 @@ export async function POST(request: NextRequest){
         const headers=new Headers();//It is an object that represents the headers of an HTTP request or response
         headers.append(
             "Set-Cookie",
-            `token=${token}; path=/; secure; HttpOnly;`
+            `token=${token}; path=/; secure; HttpOnly; SameSite=None; Secure`
         )
 
         //return response with token
