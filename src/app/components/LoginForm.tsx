@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import userStore, { UserState } from "@/app/store/use-store/userStore";
+import { loginAxiosForGetToken } from "../services/auth";
 
 export const LoginForm = () => {
   const router = useRouter();
@@ -15,12 +16,17 @@ export const LoginForm = () => {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      // token checking
-      setUser({ email, password });
-      console.log("Signin successful");
-      clearData();
+      const response = await loginAxiosForGetToken(email, password);
+      if (response) {
+        setUser({ email, password });
+        console.log("Signin successful");
+        router.push("/pages/add-recipe");  
+        clearData();
+      } else {
+        setError("error");
+      }
     } catch (error) {
-      console.log("There is an error", error);
+      console.log(error);
     }
   };
 
@@ -30,7 +36,6 @@ export const LoginForm = () => {
     setError("");
     if (router) {
       router.push("/home");
-      console.log(router, "ghjkl;");
     }
     setIsLogin(false);
   };
