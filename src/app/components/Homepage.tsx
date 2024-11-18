@@ -109,13 +109,13 @@ export const Homepage = () => {
   Add Recipe
 </button>
 
-<button className="self-end bg-[#7864EA] text-white rounded-sm 
+{/* <button className="self-end bg-[#7864EA] text-white rounded-sm 
              p-2 sm:p-3 md:p-4 
              w-[30vw] sm:w-[20vw] md:w-[15vw] lg:w-[10vw] 
              text-sm sm:text-base md:text-lg 
              cursor-pointer justify-center"
              onClick={() => router.push("/loginPage")}
-             title="login page"> Login/Signup</button>
+             title="login page"> Login/Signup</button> */}
 
         </div>
       </header>

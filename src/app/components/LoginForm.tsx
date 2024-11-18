@@ -10,7 +10,6 @@ export const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [isLogin, setIsLogin] = useState(false);
   const setUser = userStore((state: UserState) => state.setUser);
 
   const onSubmit = async (e: React.FormEvent) => {
@@ -20,10 +19,10 @@ export const LoginForm = () => {
       if (response) {
         setUser({ email, password });
         console.log("Signin successful");
-        router.push("/pages/add-recipe");  
+        router.push("/");  
         clearData();
       } else {
-        setError("error");
+        setError("password or email are wrong");
       }
     } catch (error) {
       console.log(error);
@@ -34,7 +33,6 @@ export const LoginForm = () => {
     setEmail("");
     setPassword("");
     setError("");
-    setIsLogin(false);
   };
 
   return (
@@ -71,7 +69,7 @@ export const LoginForm = () => {
           />
         </div>
         <button className="w-full bg-[#7864EA] text-white py-2 mt-4 rounded">
-          {isLogin ? "Login" : "Sign Up"}
+          Login
         </button>
         {error && <p className="text-red-700 mt-4">{error}</p>}
       </form>
