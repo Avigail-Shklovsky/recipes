@@ -67,6 +67,7 @@ export const LoginForm = () => {
             onChange={(e) => setPassword(e.target.value)}
             id="password"
             type="password"
+            autoComplete="current-password"
           />
         </div>
         <button className="w-full bg-[#7864EA] text-white py-2 mt-4 rounded">
