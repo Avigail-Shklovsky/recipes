@@ -34,9 +34,6 @@ export const LoginForm = () => {
     setEmail("");
     setPassword("");
     setError("");
-    if (router) {
-      router.push("/home");
-    }
     setIsLogin(false);
   };
 
