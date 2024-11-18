@@ -2,22 +2,24 @@ import { NextRequest, NextResponse } from "next/server";
 import jwt from 'jsonwebtoken'
 export const dynamic = 'force-dynamic';
 
-export async function POST(request: NextRequest){
-    const {email ,password}=await request.json();
+export async function POST(request: NextRequest) {
+    console.log("hi!", request);
 
-    console.log("email",email);
-    
-    if(email==="user@example.com" && password ==="123456789"){
+    const { email, password } = await request.json();
 
-        //creat token with jwt
-        const token=jwt.sign(
-            {email,password},
+    console.log("email", email);
+
+    if (email === "user@example.com" && password === "123456789") {
+
+        //create token with jwt
+        const token = jwt.sign(
+            { email, password },
             process.env.JWT_SECRET!,
-            {expiresIn:'1h'}
+            { expiresIn: '1h' }
         );
 
-        //creat cookie with token
-        const headers=new Headers();//It is an object that represents the headers of an HTTP request or response
+        //create cookie with token
+        const headers = new Headers(); //It is an object that represents the headers of an HTTP request or response
         headers.append(
             "Set-Cookie",
             `token=${token}; path=/; secure; HttpOnly; SameSite=None; Secure`
@@ -25,13 +27,13 @@ export async function POST(request: NextRequest){
 
         //return response with token
         return NextResponse.json(
-            {message:"Login successful",token},
-            {headers}
+            { message: "Login successful", token },
+            { headers }
         )
-    }else{
+    } else {
         return NextResponse.json(
-            {message:"Invalid credentials"},
-            {status:401}
+            { message: "Invalid credentials" },
+            { status: 401 }
         )
     }
 }
