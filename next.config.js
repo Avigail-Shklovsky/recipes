@@ -8,7 +8,6 @@ const nextConfig = {
       "adikosh.co.il",
       "encrypted-tbn0.gstatic.com",
     ],
-  
   },
 };
 
