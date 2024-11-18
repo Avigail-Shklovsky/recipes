@@ -19,7 +19,7 @@ export const LoginForm = () => {
       if (response) {
         setUser({ email, password });
         console.log("Signin successful");
-        router.push("/");  
+        router.push("/homePage");
         clearData();
       } else {
         setError("password or email are wrong");
